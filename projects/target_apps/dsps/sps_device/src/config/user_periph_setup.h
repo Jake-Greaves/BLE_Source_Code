@@ -46,10 +46,10 @@
 /* UART configuration                                                                   */
 /****************************************************************************************/  
 
-    #define GPIO_UART1_TX_PORT   GPIO_PORT_0
-    #define GPIO_UART1_TX_PIN    GPIO_PIN_4
-    #define GPIO_UART1_RX_PORT   GPIO_PORT_0
-    #define GPIO_UART1_RX_PIN    GPIO_PIN_5
+    #define GPIO_UART1_TX_PORT   GPIO_PORT_1	//GPIO_PORT_0
+    #define GPIO_UART1_TX_PIN    GPIO_PIN_2		//GPIO_PIN_4
+    #define GPIO_UART1_RX_PORT   GPIO_PORT_1	//GPIO_PORT_0
+    #define GPIO_UART1_RX_PIN    GPIO_PIN_3		//GPIO_PIN_5
     #define GPIO_UART1_RTS_PORT  GPIO_PORT_0
     #define GPIO_UART1_RTS_PIN   GPIO_PIN_3
     #define GPIO_UART1_CTS_PORT  GPIO_PORT_0
