@@ -28,6 +28,7 @@
 #include "user_buffer.h"
 #include "user_periph_setup.h"            // peripheral configuration
 #include "uart_sps.h"
+#include "spi_hci.h"
 #include "ke_mem.h"
 #if (BLE_SPS_SERVER)
 #include "user_spss.h"
@@ -67,9 +68,9 @@ bool user_sps_sleep_flow_off __attribute__((section("retention_mem_area0"),zero_
  ****************************************************************************************
  */
 /// Private callback functions prototypes
-static void uart_rx_callback(uint8_t res, uint32_t read_size);
-static void uart_tx_callback(uint8_t res);
-static void uart_flow_control_callback(bool flow_en);
+static void spi_rx_callback(uint8_t res, uint32_t read_size); //remove: uart_rx_callback(uint8_t res, uint32_t read_size);
+static void spi_tx_callback(uint8_t res);
+static void spi_flow_control_callback(bool flow_en);
 
 /// Private application functions prototypes
 static uint16_t user_periph_pull(uint8_t** rddata, uint16_t read_amount);
@@ -95,14 +96,14 @@ void user_scheduler_init(void)
         user_buffer_create(&periph_to_ble_buffer, RX_BUFFER_ITEM_COUNT, RX_BUFFER_LWM, RX_BUFFER_HWM);
     }
     // register a callback function for the flow control
-    uart_sps_register_flow_ctrl_cb(&uart_flow_control_callback);
+    //remove: spi_sps_register_flow_ctrl_cb(&spi_flow_control_callback);
 
-    uart_sps_init(UART_SPS_BAUDRATE, 3);
+    spi_hci_slave_init(); //remove: uart_sps_init(UART_SPS_BAUDRATE, 3);
 
     // call read function once to initialize uart driver environment
-    uart_rx_callback(UART_STATUS_INIT, NULL);
+    spi_rx_callback(SPI_STATUS_INIT, NULL); //remove: uart_rx_callback(UART_STATUS_INIT, NULL);
 		
-    uart_sps_flow_on();
+    spi_hci_flow_on_func(); //remove: uart_sps_flow_on();
 }
 
 /**
@@ -115,16 +116,16 @@ void user_scheduler_init(void)
  * @return      none
  ****************************************************************************************
  */
-static void uart_rx_callback(uint8_t res, uint32_t read_size)
+static void spi_rx_callback(uint8_t res, uint32_t read_size) //remove: uart_rx_callback(uint8_t res, uint32_t read_size)
 {
     uint8_t *periph_rx_ptr = NULL;
     //function called from uart receive isr
     switch (res)
     {
-        case UART_STATUS_OK:
+        case SPI_STATUS_OK:
             user_periph_push(&periph_rx_ptr, read_size);
             break;
-        case UART_STATUS_INIT:
+        case SPI_STATUS_INIT:
             //request space in buffer
             if (user_buffer_write_check(&periph_to_ble_buffer, &periph_rx_ptr, RX_CALLBACK_SIZE) != RX_CALLBACK_SIZE)
             {
@@ -136,7 +137,7 @@ static void uart_rx_callback(uint8_t res, uint32_t read_size)
     }
     
     //reinitiate callback
-    uart_sps_read(periph_rx_ptr, RX_CALLBACK_SIZE, &uart_rx_callback);
+    spi_hci_read_func(periph_rx_ptr, RX_CALLBACK_SIZE, &spi_rx_callback); //remove: uart_sps_read(periph_rx_ptr, RX_CALLBACK_SIZE, &uart_rx_callback);
 }
 
 /**
@@ -148,18 +149,18 @@ static void uart_rx_callback(uint8_t res, uint32_t read_size)
  * @return      none
  ****************************************************************************************
  */
-static void uart_tx_callback(uint8_t res)
+static void spi_tx_callback(uint8_t res)
 {
     static uint8_t size=0;
     uint8_t *periph_tx_ptr = NULL;
     //function gets called from uart transmit isr or application when its not running
     switch(res)
     {
-        case UART_STATUS_OK:
+        case SPI_STATUS_OK:
             //get data and pointer
             size = user_periph_pull(&periph_tx_ptr, size);
             break;
-        case UART_STATUS_INIT:
+        case SPI_STATUS_INIT:
             size = user_buffer_read_address(&ble_to_periph_buffer, &periph_tx_ptr, TX_CALLBACK_SIZE);
             break;
         default:
@@ -168,7 +169,7 @@ static void uart_tx_callback(uint8_t res)
     //if there is data available, send data over periph
     if(size > 0)
     {
-        uart_sps_write(periph_tx_ptr, size, &uart_tx_callback);
+			spi_hci_write_func(periph_tx_ptr, size, &spi_tx_callback); //remove: uart_sps_write(periph_tx_ptr, size, &uart_tx_callback);
         return;
     }
     
@@ -185,7 +186,7 @@ static void uart_tx_callback(uint8_t res)
  * @return      none
  ****************************************************************************************
  */
-static void uart_flow_control_callback(bool flow_en)
+static void spi_flow_control_callback(bool flow_en)
 {
     if (flow_en)
         user_override_ble_xon();
@@ -252,7 +253,7 @@ static void user_periph_push(uint8_t** wrdata, uint16_t write_amount)
     //make sure that XOFF is send as fast as possible
     if(send_flow_off)
     {
-        uart_sps_flow_off(true);
+        spi_hci_flow_off_func();
     }
 }
 
@@ -287,7 +288,7 @@ void user_ble_push(uint8_t* wrdata, uint16_t write_amount)
     if(!callbackbusy)
     {
         callbackbusy = true;
-        uart_tx_callback(UART_STATUS_INIT);
+        spi_tx_callback(SPI_STATUS_INIT);
     }
     __enable_irq();
 }
@@ -350,7 +351,7 @@ void user_ble_pull (bool init, bool success)
     //if XON should be send, make sure it's send as soon as possible
     if(send_flow_on)
     {
-        uart_sps_flow_on();
+        spi_hci_flow_on_func();
     }
 }
 
@@ -397,13 +398,13 @@ static void user_override_ble_xon(void)
 void user_scheduler_reinit(void)
 {
     // register a callback function for the flow control
-    uart_sps_register_flow_ctrl_cb(&uart_flow_control_callback);
+	//remove: spi_sps_register_flow_ctrl_cb(&spi_flow_control_callback);
     // call read function once to initialize uart driver environment
     if(user_buffer_initialized(&periph_to_ble_buffer))
     {
-        uart_sps_init(UART_SPS_BAUDRATE, 3);
+				spi_hci_slave_init(); //remove: uart_sps_init(UART_SPS_BAUDRATE, 3);
 
-        uart_rx_callback(UART_STATUS_INIT, NULL);
+        spi_rx_callback(SPI_STATUS_INIT, NULL);
     }
 }
 
@@ -524,13 +525,13 @@ void user_sps_sleep_check(void)
                 break;
             if (user_buffer_item_count(&periph_to_ble_buffer))
                 break;
-            if (uart_sps_get_tx_buffer_size())
+            if (spi_hci_get_tx_buffer_size())
                 break;
-            if (uart_sps_fifo_check())
+            if (spi_hci_fifo_check())
                 break;
             if (user_rwip_sleep_check() != mode_sleeping)
                 break;
-            if (!uart_sps_flow_off(false))
+            if (!spi_hci_flow_off_func())
                 break;
             user_sps_sleep_flow_off = true;
             arch_set_extended_sleep();
@@ -555,12 +556,12 @@ void user_sps_sleep_restore(void)
         {
             if(periph_to_ble_buffer.hwm_reached == false)
             {
-                uart_sps_flow_on();
+                spi_hci_flow_on_func();
             }
 #if (UART_HW_FLOW_ENABLED)
             else
             {
-                uart_sps_flow_off(true);
+                spi_hci_flow_off_func();
             }
 #endif //UART_HW_FLOW_ENABLED
             

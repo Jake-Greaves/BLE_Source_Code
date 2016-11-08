@@ -91,7 +91,7 @@ bool spi_hci_flow_off_func(void);
  * @param[in]      size   Size of the expected reception
  *****************************************************************************************
  */
-void spi_hci_read_func(uint8_t *bufptr, uint32_t size, void (*callback) (uint8_t));
+void spi_hci_read_func(uint8_t *bufptr, uint32_t size, void (*callback) (uint8_t, uint32_t));
 
 /**
  ****************************************************************************************
@@ -106,6 +106,17 @@ void spi_hci_read_func(uint8_t *bufptr, uint32_t size, void (*callback) (uint8_t
  */
 void spi_hci_write_func(uint8_t *bufptr, uint32_t size, void (*callback) (uint8_t));
 
+uint32_t spi_hci_get_tx_buffer_size(void);
+
+/**
+ ****************************************************************************************
+ * @brief Check rx or tx is ongoing.
+ *
+ * @return Activity      false: No activity / true: Tx or Rx
+ *****************************************************************************************
+ */
+
+bool spi_hci_fifo_check(void);
 
 /// @} HCI_SPI
 #endif // _HCI_SPI_

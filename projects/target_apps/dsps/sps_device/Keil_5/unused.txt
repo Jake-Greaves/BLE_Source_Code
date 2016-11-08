@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060300: Last Updated: Tue Nov 01 19:33:38 2016
+;#<FEEDBACK># ARM Linker, 5060300: Last Updated: Tue Nov 08 18:11:28 2016
 ;VERSION 0.2
 ;FILE adc.o
 adc_calibrate <= USED 0
@@ -105,7 +105,10 @@ battery_get_lvl <= USED 0
 ;FILE gapm_util.obj
 ;FILE gpio.o
 GPIO_ConfigurePinPower <= USED 0
+GPIO_EnableIRQ <= USED 0
 GPIO_GetIRQInputLevel <= USED 0
+GPIO_GetPinStatus <= USED 0
+GPIO_RegisterCallback <= USED 0
 GPIO_SetIRQInputLevel <= USED 0
 ;FILE hardfault_handler.o
 ;FILE jump_table.o
@@ -125,6 +128,16 @@ rf_nfm_is_enabled <= USED 0
 ;FILE rwip.o
 ;FILE smpc.obj
 ;FILE smpc_task.obj
+;FILE spi.o
+spi_access <= USED 0
+spi_cs_high <= USED 0
+spi_cs_low <= USED 0
+spi_disable <= USED 0
+spi_init <= USED 0
+spi_release <= USED 0
+spi_set_bitmode <= USED 0
+spi_transaction <= USED 0
+;FILE spi_hci.o
 ;FILE sps_server.o
 ;FILE syscntl.o
 syscntl_set_dcdc_vbat3v_level <= USED 0
@@ -136,15 +149,6 @@ systick_stop <= USED 0
 systick_value <= USED 0
 systick_wait <= USED 0
 ;FILE trng.o
-;FILE uart2.o
-uart2_finish_transfers <= USED 0
-uart2_flow_off <= USED 0
-uart2_flow_on <= USED 0
-uart2_init <= USED 0
-uart2_read <= USED 0
-uart2_write <= USED 0
-;FILE uart_sps.o
-uart_sps_finish_transfers <= USED 0
 ;FILE user_buffer.o
 user_buffer_read_items <= USED 0
 ;FILE user_periph_setup.o

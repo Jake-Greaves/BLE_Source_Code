@@ -58,7 +58,7 @@
 #define TX_START_FRAME_DATA_SIZE    (20)
 #define TX_CONTINUE_FRAME_DATA_SIZE (27)
 
-#define UART_STATUS_INIT (UART_STATUS_ERROR +1)
+#define SPI_STATUS_INIT (SPI_STATUS_ERROR +1)
 /*
  * STRUCTURES
  ****************************************************************************************
