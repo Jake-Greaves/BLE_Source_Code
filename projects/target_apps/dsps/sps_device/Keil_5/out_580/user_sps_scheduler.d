@@ -68,7 +68,6 @@
 .\out_580\user_sps_scheduler.o: .\..\..\..\..\..\sdk_580\sdk\platform\driver\i2c_eeprom\i2c_eeprom.h
 .\out_580\user_sps_scheduler.o: .\..\..\common\src\driver\uart_sps.h
 .\out_580\user_sps_scheduler.o: .\..\..\..\..\..\sdk_580\sdk\platform\driver\uart\uart.h
-.\out_580\user_sps_scheduler.o: .\..\..\..\..\..\sdk_580\sdk\platform\driver\spi_hci\spi_hci.h
 .\out_580\user_sps_scheduler.o: .\..\..\..\..\..\sdk_580\sdk\platform\core_modules\ke\api\ke_mem.h
 .\out_580\user_sps_scheduler.o: .\..\src\user_spss.h
 .\out_580\user_sps_scheduler.o: .\..\..\..\..\..\sdk_580\sdk\platform\core_modules\rwip\api\rwip.h

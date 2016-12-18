@@ -42,7 +42,7 @@
  */
 //application defines 
 #define TX_CALLBACK_SIZE        (uint8_t)   16  //16 bytes messages
-#define RX_CALLBACK_SIZE        (uint8_t)   8
+#define RX_CALLBACK_SIZE        (uint8_t)   16
 
 #define TX_BUFFER_ITEM_COUNT    (int)       1800
 #define TX_BUFFER_HWM           (int)       850     //47%
@@ -58,7 +58,7 @@
 #define TX_START_FRAME_DATA_SIZE    (20)
 #define TX_CONTINUE_FRAME_DATA_SIZE (27)
 
-#define SPI_STATUS_INIT (SPI_STATUS_ERROR +1)
+#define UART_STATUS_INIT (UART_STATUS_ERROR +1)
 /*
  * STRUCTURES
  ****************************************************************************************

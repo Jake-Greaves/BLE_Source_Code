@@ -63,6 +63,7 @@
 .\out_580\user_periph_setup.o: .\..\..\..\..\..\sdk_580\sdk\common_project_files\da1458x_periph_setup.h
 .\out_580\user_periph_setup.o: .\..\..\..\..\..\sdk_580\sdk\platform\driver\i2c_eeprom\i2c_eeprom.h
 .\out_580\user_periph_setup.o: .\..\..\..\..\..\sdk_580\sdk\platform\driver\gpio\gpio.h
-.\out_580\user_periph_setup.o: .\..\..\..\..\..\sdk_580\sdk\platform\driver\spi_hci\spi_hci.h
+.\out_580\user_periph_setup.o: .\..\..\..\..\..\sdk_580\sdk\platform\driver\uart\uart.h
+.\out_580\user_periph_setup.o: .\..\..\common\src\driver\uart_sps.h
 .\out_580\user_periph_setup.o: .\..\..\common\src\user_sps_scheduler.h
 .\out_580\user_periph_setup.o: .\..\..\common\src\user_buffer.h

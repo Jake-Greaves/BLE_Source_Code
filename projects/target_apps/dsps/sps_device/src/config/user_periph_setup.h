@@ -41,30 +41,19 @@
 
 /* Enable WKUPCT. Required by wkupct_quadec driver. */
     #define WKUP_ENABLED
-		
-/****************************************************************************************/ 
-/* SPI configuration                                                                   */
-/****************************************************************************************/  
-		
-		#define SPI_GPIO_PORT   GPIO_PORT_0		//GPIO_PORT_0
-		#define SPI_CLK_PIN			GPIO_PIN_0		//GPIO_PIN_0
-    #define SPI_CS_PIN    	GPIO_PIN_1		//GPIO_PIN_1
-		#define SPI_MISO_PIN		GPIO_PIN_2		//GPIO_PIN_2
-		#define SPI_MOSI_PIN		GPIO_PIN_3		//GPIO_PIN_3
-    #define SPI_DREADY_PIN  GPIO_PIN_5		//GPIO_PIN_5
 
 /****************************************************************************************/ 
 /* UART configuration                                                                   */
 /****************************************************************************************/  
 
-    #define GPIO_UART1_TX_PORT   GPIO_PORT_1	//GPIO_PORT_0
-    #define GPIO_UART1_TX_PIN    GPIO_PIN_2		//GPIO_PIN_4
-    #define GPIO_UART1_RX_PORT   GPIO_PORT_1	//GPIO_PORT_0
-    #define GPIO_UART1_RX_PIN    GPIO_PIN_3		//GPIO_PIN_5
-    #define GPIO_UART1_RTS_PORT  GPIO_PORT_0
-    #define GPIO_UART1_RTS_PIN   GPIO_PIN_3
-    #define GPIO_UART1_CTS_PORT  GPIO_PORT_0
-    #define GPIO_UART1_CTS_PIN   GPIO_PIN_2
+    #define GPIO_UART1_TX_PORT   GPIO_PORT_1
+    #define GPIO_UART1_TX_PIN    GPIO_PIN_2
+    #define GPIO_UART1_RX_PORT   GPIO_PORT_1
+    #define GPIO_UART1_RX_PIN    GPIO_PIN_3
+    #define GPIO_UART1_RTS_PORT  GPIO_PORT_1
+    #define GPIO_UART1_RTS_PIN   GPIO_PIN_0
+    #define GPIO_UART1_CTS_PORT  GPIO_PORT_1
+    #define GPIO_UART1_CTS_PIN   GPIO_PIN_1
 
 /****************************************************************************************/ 
 /* UART2 GPIO configuration                                                             */

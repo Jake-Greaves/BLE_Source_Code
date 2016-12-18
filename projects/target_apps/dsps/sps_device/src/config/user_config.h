@@ -48,7 +48,7 @@
  * - ARCH_DEEP_SLEEP_ON
  ******************************************
  */
-const static sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_ON;
+const static sleep_state_t app_default_sleep_mode = ARCH_EXT_SLEEP_ON;//ARCH_SLEEP_OFF;//ARCH_EXT_SLEEP_ON;
 
 static const struct security_configuration user_security_configuration = {
     .oob            = GAP_OOB_AUTH_DATA_NOT_PRESENT,

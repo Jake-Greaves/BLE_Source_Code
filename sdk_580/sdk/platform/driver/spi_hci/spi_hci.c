@@ -51,18 +51,7 @@
  * transactions
  */
 /// SPI TX RX Channel
-struct spi_rxchannel
-{
-    /// size
-    uint32_t  size;
-    /// buffer pointer
-    uint8_t  *bufptr;
-    /// call back function pointer
-    void (*callback) (uint8_t, uint32_t);
-};
-
-/// SPI TX RX Channel
-struct spi_txchannel
+struct spi_txrxchannel
 {
     /// size
     uint32_t  size;
@@ -76,9 +65,9 @@ struct spi_txchannel
 struct spi_env_tag
 {
     /// tx channel
-    struct spi_txchannel tx;
+    struct spi_txrxchannel tx;
     /// rx channel
-    struct spi_rxchannel rx;
+    struct spi_txrxchannel rx;
 };
 
 /*
@@ -102,7 +91,7 @@ static struct spi_env_tag spi_env __attribute__((section("retention_mem_area0"),
  */
 static void spi_receive_data_isr(void)
 {
-    void (*callback) (uint8_t, uint32_t) = NULL;
+    void (*callback) (uint8_t) = NULL;
     
     // Read available received data to SPI environment buffer pointer
     while (spi_data_rdy_getf())
@@ -152,7 +141,7 @@ static void spi_receive_data_isr(void)
                 spi_env.rx.bufptr = NULL;
                 
                 // Call handler
-                callback(SPI_STATUS_OK, NULL);
+                callback(SPI_STATUS_OK);
                 
 #ifdef CFG_SPI_RX_FLOW_CONTROL
                 // De-assert dready to continue the current transmission
@@ -366,7 +355,7 @@ bool spi_hci_flow_off_func(void)
  * @param[in] *callback: Pointer to the callback function.
  ****************************************************************************************
  */
-void spi_hci_read_func(uint8_t *bufptr, uint32_t size,void (*callback) (uint8_t, uint32_t))
+void spi_hci_read_func(uint8_t *bufptr, uint32_t size,void (*callback) (uint8_t))
 {
     // Sanity check
     ASSERT_ERR(bufptr != NULL);
@@ -419,22 +408,4 @@ void spi_hci_write_func(uint8_t *bufptr, uint32_t size, void (*callback) (uint8_
 void SPI_Handler(void)
 {
     spi_receive_data_isr();
-}
-
-uint32_t spi_hci_get_tx_buffer_size(void)
-{
-    return spi_env.tx.size;
-}
-
-/**
- ****************************************************************************************
- * @brief Check rx or tx is ongoing.
- *
- * @return Activity      false: No activity / true: Tx or Rx
- *****************************************************************************************
- */
-
-bool spi_hci_fifo_check(void)
-{
-    return (spi_data_rdy_getf() != 0);
 }

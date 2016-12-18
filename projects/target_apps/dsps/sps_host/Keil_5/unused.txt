@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5050041: Last Updated: Tue Oct 13 13:59:08 2015
+;#<FEEDBACK># ARM Linker, 5060300: Last Updated: Thu Nov 24 22:02:30 2016
 ;VERSION 0.2
 ;FILE adc.o
 adc_calibrate <= USED 0
@@ -87,6 +87,7 @@ arch_last_rwble_evt_get <= USED 0
 arch_restore_sleep_mode <= USED 0
 ;FILE arch_system.o
 arch_adv_time_calculate <= USED 0
+arch_set_pxact_gpio <= USED 0
 calibrate_rcx20 <= USED 0
 lld_sleep_lpcycles_2_us_rcx_func <= USED 0
 lld_sleep_us_2_lpcycles_rcx_func <= USED 0
@@ -106,10 +107,7 @@ battery_get_lvl <= USED 0
 ;FILE gapm_util.obj
 ;FILE gpio.o
 GPIO_ConfigurePinPower <= USED 0
-GPIO_EnableIRQ <= USED 0
 GPIO_GetIRQInputLevel <= USED 0
-GPIO_GetPinStatus <= USED 0
-GPIO_RegisterCallback <= USED 0
 GPIO_SetIRQInputLevel <= USED 0
 ;FILE hardfault_handler.o
 ;FILE jump_table.o

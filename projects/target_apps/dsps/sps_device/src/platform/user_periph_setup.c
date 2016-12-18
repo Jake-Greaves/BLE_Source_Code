@@ -22,7 +22,8 @@
 #include "user_periph_setup.h"            // peripheral configuration
 #include "global_io.h"
 #include "gpio.h"
-#include "spi_hci.h"
+#include "uart.h"                    // UART initialization
+#include "uart_sps.h"
 #include "user_sps_scheduler.h"
 
 /**
@@ -47,11 +48,8 @@ void GPIO_reservations(void)
 i.e.  
     RESERVE_GPIO(DESCRIPTIVE_NAME, GPIO_PORT_0, GPIO_PIN_1, PID_GPIO);    //Reserve P_01 as Generic Purpose I/O
 */
-    RESERVE_GPIO( SPI_CLK, SPI_GPIO_PORT, SPI_CLK_PIN, PID_SPI_CLK);  
-		RESERVE_GPIO( SPI_CS, SPI_GPIO_PORT, SPI_CS_PIN, PID_SPI_EN);  
-		RESERVE_GPIO( SPI_MISO, SPI_GPIO_PORT, SPI_MISO_PIN, PID_SPI_DO);  
-		RESERVE_GPIO( SPI_MOSI, SPI_GPIO_PORT, SPI_MOSI_PIN, PID_SPI_DI);  
-	
+    RESERVE_GPIO( UART1_TX, GPIO_UART1_TX_PORT, GPIO_UART1_TX_PIN, PID_UART1_TX);  
+    RESERVE_GPIO( UART1_RX, GPIO_UART1_RX_PORT, GPIO_UART1_RX_PIN, PID_UART1_RX);
 #if (UART_HW_FLOW_ENABLED) 
     RESERVE_GPIO( UART1_RTS, GPIO_UART1_RTS_PORT, GPIO_UART1_RTS_PIN, PID_UART1_RTSN);  
     RESERVE_GPIO( UART1_CTS, GPIO_UART1_CTS_PORT, GPIO_UART1_CTS_PIN, PID_UART1_CTSN);
